@@ -1,0 +1,32 @@
+{
+  "indent"    : 2,
+  "camelcase" : true,
+  "newcap"    : true,
+  "quotmark"  : true,
+  "onevar"    : true,
+  "latedef"   : true,
+  "immed"     : true,
+  "strict"    : true,
+  "eqeqeq"    : true,
+  "nonew"     : true,
+  "curly"     : true,
+  "forin"     : true,
+  "trailing"  : true,
+  
+  "undef"     : true,
+  
+  "browser"   : true,
+  "devel"     : true,
+  "jquery"    : true,
+
+  "predef":   [
+    "requirejs",
+    "define",
+    "require",
+    
+    "Modernizr",
+    "respond",
+
+    "FCV"
+  ]
+}

@@ -16,11 +16,11 @@ module.exports = function (grunt) {
       imageDir: 'images',
       scriptsDir: 'scripts',
       stylesDir: 'sass',
-      sourceBowerDir: '<%= info.sourceDir %>/bower_components',
+      svgDir: 'svg',
       sourceScripts: '<%= info.sourceDir %>/<%= info.scriptsDir %>',
       sourceImages: '<%= info.sourceDir %>/<%= info.imageDir %>',
       sourceStyles: '<%= info.sourceDir %>/<%= info.stylesDir %>',
-      buildScripts: '<%= info.buildDir %>/<%= info.scriptsDir %>',
+      sourceSVG: '<%= info.sourceDir %>/<%= info.svgDir %>',
       docsDir: 'docs'
     },
 
@@ -28,46 +28,16 @@ module.exports = function (grunt) {
     clean: {
       css: ['<%= info.sourceDir %>/css'],
       dist: ['<%= info.buildDir %>'],
-      requirejs: ['<%= info.buildDir %>/sass', '<%= info.buildDir %>/build.txt'],
-      docs: ['<%= info.docsDir %>'],
-      distbower: [
-        '<%= info.buildDir %>/bower_components/**/*.*',
-        '<%= info.buildDir %>/bower_components/**/.*',
-        '<%= info.buildDir %>/bower_components/**/docs',
-        '<%= info.buildDir %>/bower_components/**/test',
-        '<%= info.buildDir %>/bower_components/**/examples',
-        '<%= info.buildDir %>/bower_components/**/CNAME',
-        '<%= info.buildDir %>/bower_components/**/Rakefile',
-        '!<%= info.buildDir %>/bower_components/**/*.js',
-        '<%= info.buildDir %>/bower_components/**/Gruntfile.js',
-        '!<%= info.buildDir %>/bower_components/**/fonts'
-      ]
+      docs: ['<%= info.docsDir %>']
     },
 
 
     compass: {
-      options: {
-        sassDir: '<%= info.sourceDir %>/styles',
-        cssDir: '<%= info.sourceDir %>/css',
-        imagesDir: '<%= info.sourceImages %>',
-        javascriptsDir: '<%= info.sourceScripts %>',
-        fontsDir: '<%= info.sourceDir %>/css/fonts',
-        httpPath: '../',
-        relativeAssets: false,
-        outputStyle: 'expanded'
-      },
-      clean: {
-        options: {
-          clean: true
-        }
-      },
-      dev: {},
-      dist: {
-        options: {
-          sassDir: '<%= info.buildDir %>/css',
-          outputStyle: 'compressed'
-        }
+      dev: {
+
       }
+
+
     },
 
 
@@ -75,7 +45,7 @@ module.exports = function (grunt) {
       icons: {
         files: [{
           expand: true,
-          cwd: '<%= info.sourceImages %>/svg/',
+          cwd: '<%= info.sourceSVG %>',
           src: ['*.svg', '*.png'],
           dest: '<%= info.sourceDir %>/css/icons/'
         }],
@@ -172,8 +142,6 @@ module.exports = function (grunt) {
     jsduck: {
       main: {
         src: [
-          '<%= info.sourceBowerDir %>/fcv-js/src/scripts',
-          '<%= info.sourceBowerDir %>/fcv-js/src/styles',
           '<%= info.sourceScripts %>/Site',
           '<%= info.sourceScripts %>/*.js',
           '<%= info.sourceStyles %>/lib',
@@ -199,18 +167,18 @@ module.exports = function (grunt) {
         },
         files: [
           '<%= info.sourceStyles %>/*.scss',
-          '<%= info.sourceStyles %>/lib/**/*.scss',
-          '<%= info.sourceStyles %>/base/**/*.scss',
+          '<%= info.sourceStyles %>/components/**/*.scss',
+          '<%= info.sourceStyles %>/layouts/**/*.scss',
           '<%= info.sourceStyles %>/features/**/*.scss',
           '<%= info.sourceStyles %>/vendor/**/*.scss'
         ],
-        tasks: ['compass:dev', 'legacssy']
+        tasks: ['compass:dev']
       },
       icons: {
         options: {
           livereload: true
         },
-        files: ['<%= info.sourceImages %>/svg/*.svg'],
+        files: ['<%= info.sourceSVG%>/*.svg'],
         tasks: ['grunticon']
       },
       js: {
@@ -234,10 +202,7 @@ module.exports = function (grunt) {
 
 
   grunt.registerTask('css', [
-    'clean:css',
-    // 'compass:clean',
     'compass:dev',
-    'legacssy',
     'grunticon'
   ]);
 
