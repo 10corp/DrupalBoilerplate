@@ -82,3 +82,9 @@ $RECYCLE.BIN/
 
 /.sass-cache
 /css
+
+# Grunt
+# =========================
+
+/node_modules
+*.log

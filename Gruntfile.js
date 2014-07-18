@@ -256,7 +256,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('dev', [
     'src',
-    'connect:server',
     'watch'
   ]);
 
