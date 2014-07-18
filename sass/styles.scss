@@ -23,3 +23,14 @@
 /* SMACSS theme rules */
 /* @import "theme-A"; */
 /* @import "theme-B"; */
+
+/* Main Nav */
+@import "components/mainNav.scss";
+
+/* Breadcrumbs */
+
+@import "components/breadcrumbs.scss";
+
+/* Footer */
+
+@import "components/footer.scss";
