@@ -15,7 +15,7 @@ module.exports = function (grunt) {
       buildDir: 'dist',
       devDir: 'dev',
       imageDir: 'images',
-      scriptsDir: 'scripts',
+      scriptsDir: 'js',
       stylesDir: 'sass',
       svgDir: 'svg',
       sourceScripts: '<%= info.sourceDir %>/<%= info.scriptsDir %>',
@@ -212,8 +212,12 @@ module.exports = function (grunt) {
         options: {
           livereload: true
         },
-        files: ['<%= jshint.all %>'],
+        files: ['<%= info.sourceScripts %>/**/*.js'],
         tasks: ['js']
+      },
+      uglify: {
+        files: ['<%= info.sourceScripts %>/**/*.js'],
+        tasks: ['uglify:dev']
       },
       php: {
         files: ['<%= info.sourceDir %>/templates/*.php'],
@@ -247,6 +251,7 @@ module.exports = function (grunt) {
   grunt.registerTask('dev', [
     'src',
     'uglify:dev',
+    'copy:dev',
     'watch'
   ]);
 
