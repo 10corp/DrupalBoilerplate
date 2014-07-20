@@ -13,6 +13,7 @@ module.exports = function (grunt) {
     info: {
       sourceDir: '.',
       buildDir: 'dist',
+      devDir: 'dev',
       imageDir: 'images',
       scriptsDir: 'scripts',
       stylesDir: 'sass',
@@ -25,16 +26,18 @@ module.exports = function (grunt) {
     },
 
 
-    clean: {
-      css: ['<%= info.sourceDir %>/css'],
-      dist: ['<%= info.buildDir %>'],
-      docs: ['<%= info.docsDir %>']
-    },
-
-
     compass: {
       dev: {
-
+        options: {
+          config: 'configFiles/configDev.rb',
+          cssDir: '<%= info.devDir %>/css'
+        }
+      },
+      build: {
+        options: {
+          config: 'configFiles/configBuild.rb',
+          cssDir: '<%= info.buildDir %>/css'
+        }
       }
 
 
@@ -42,12 +45,25 @@ module.exports = function (grunt) {
 
 
     grunticon: {
-      icons: {
+      dev: {
         files: [{
           expand: true,
           cwd: '<%= info.sourceSVG %>',
           src: ['*.svg', '*.png'],
-          dest: '<%= info.sourceDir %>/css/icons/'
+          dest: '<%= info.devDir %>/css/icons/'
+        }],
+        options: {
+          colors: {
+            // white: 'white'
+          }
+        }
+      },
+      build: {
+        files: [{
+          expand: true,
+          cwd: '<%= info.sourceSVG %>',
+          src: ['*.svg', '*.png'],
+          dest: '<%= info.buildDir %>/css/icons/'
         }],
         options: {
           colors: {
@@ -63,9 +79,7 @@ module.exports = function (grunt) {
         jshintrc: '.jshintrc'
       },
       all: [
-        'Gruntfile.js',
-        '<%= info.sourceScripts %>/*.js',
-        '<%= info.sourceScripts %>/Site/**/*.js'
+        '<%= info.sourceScripts %>/*.js'
       ]
     },
 
@@ -97,47 +111,83 @@ module.exports = function (grunt) {
 
 
     uglify: {
-      dist: {
+      dev: {
         options: {
-          preserveComments: 'some'
-          // sourceMapRoot: '/',
-          // sourceMap: function (filename) {
-          //   return filename.replace(/\.js$/, '.map');
-          // },
-          // sourceMappingURL: function (filename) {
-          //   return filename.replace(/\.js$/, '.map');
-          // }
+          preserveComments: 'all',
+          beautify: {
+            width: 80,
+            beautify: true
+          },
+          banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> */'
         },
-
         files: [{
           expand: true,
-          cwd: '<%= info.buildScripts %>/',
+          cwd: '<%= info.sourceDir %>/js',
           src: ['**/*.js'],
-          dest: '<%= info.buildScripts %>/'
+          dest: '<%= info.devDir %>/js'
+        }]
+      },
+      build: {
+        options: {
+          preserveComments: 'none',
+          drop_console: true,
+          banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> */'
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= info.sourceDir %>/js',
+          src: ['**/*.js'],
+          dest: '<%= info.buildDir %>/js'
         }]
       }
     },
 
-
-    jsduck: {
-      main: {
-        src: [
-          '<%= info.sourceScripts %>/Site',
-          '<%= info.sourceScripts %>/*.js',
-          '<%= info.sourceStyles %>/lib',
-          '<%= info.sourceStyles %>/vendor'
-        ],
-        dest: 'docs',
-        options: {
-          title: '<%= pkg.name %>',
-          categories: 'docs-assets/categories.json',
-          css: 'docs-assets/styles.css',
-          warnings: ['-nodoc', '-dup_member', '-link', '-link_ambiguous'],
-          external: ['GLOBAL', 'Modernizr', 'respond', 'jQuery', 'jqXHR', 'underscore', 'head']
-        }
+    copy:{
+      dev:{
+        files: [
+          // images
+          {expand: true,
+          src: ['images/**'],
+          dest: '<%= info.devDir %>'},
+          // drupal templates
+          {expand: true,
+          src: ['templates/**'],
+          dest: '<%= info.devDir %>'},
+          // root drupal theme files
+          {expand: true,
+          src: ['<%= info.sourceDir %>/*.php'],
+          dest: '<%= info.devDir %>'},
+          {expand: true,
+          src: ['<%= info.sourceDir %>/*.png'],
+          dest: '<%= info.devDir %>'},
+          {expand: true,
+          src: ['<%= info.sourceDir %>/*.info'],
+          dest: '<%= info.devDir %>'},
+        ]
+      },
+      build:{
+        files: [
+          // images
+          {expand: true,
+          src: ['images/**'],
+          dest: '<%= info.buildDir %>'},
+          // drupal templates
+          {expand: true,
+          src: ['templates/**'],
+          dest: '<%= info.buildDir %>'},
+          // root drupal theme files
+          {expand: true,
+          src: ['<%= info.sourceDir %>/*.php'],
+          dest: '<%= info.buildDir %>'},
+          {expand: true,
+          src: ['<%= info.sourceDir %>/*.png'],
+          dest: '<%= info.buildDir %>'},
+          {expand: true,
+          src: ['<%= info.sourceDir %>/*.info'],
+          dest: '<%= info.buildDir %>'},
+        ]
       }
     },
-
 
     watch: {
       sass: {
@@ -147,10 +197,7 @@ module.exports = function (grunt) {
         },
         files: [
           '<%= info.sourceStyles %>/*.scss',
-          '<%= info.sourceStyles %>/components/**/*.scss',
-          '<%= info.sourceStyles %>/layouts/**/*.scss',
-          '<%= info.sourceStyles %>/features/**/*.scss',
-          '<%= info.sourceStyles %>/vendor/**/*.scss'
+          '<%= info.sourceStyles %>/layouts/**/*.scss'
         ],
         tasks: ['compass:dev']
       },
@@ -159,7 +206,7 @@ module.exports = function (grunt) {
           livereload: true
         },
         files: ['<%= info.sourceSVG%>/*.svg'],
-        tasks: ['grunticon']
+        tasks: ['grunticon:dev']
       },
       js: {
         options: {
@@ -168,11 +215,9 @@ module.exports = function (grunt) {
         files: ['<%= jshint.all %>'],
         tasks: ['js']
       },
-      justwatch: {
-        options: {
-          livereload: true
-        },
-        files: ['index.html']
+      php: {
+        files: ['<%= info.sourceDir %>/templates/*.php'],
+        tasks: ['copy:dev']
       }
     }
 
@@ -201,6 +246,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('dev', [
     'src',
+    'uglify:dev',
     'watch'
   ]);
 

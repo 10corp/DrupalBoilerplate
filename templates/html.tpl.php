@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Zen theme's implementation to display the basic html structure of a single

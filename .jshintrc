@@ -12,21 +12,12 @@
   "curly"     : true,
   "forin"     : true,
   "trailing"  : true,
-  
+
   "undef"     : true,
-  
+
   "browser"   : true,
   "devel"     : true,
-  "jquery"    : true,
+  "jquery"    : true
 
-  "predef":   [
-    "requirejs",
-    "define",
-    "require",
-    
-    "Modernizr",
-    "respond",
 
-    "FCV"
-  ]
 }
