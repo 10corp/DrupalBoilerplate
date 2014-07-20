@@ -12,7 +12,7 @@
 ; page at admin/appearance.
 
 screenshot  = screenshot.png
-name        = Neptune Sub Theme Dev
+name        = Drupal Theme Dev - Zen Theme, Neptune sub-theme
 description = A Zen sub-theme.
 
 
@@ -62,8 +62,6 @@ stylesheets[all][] = css/page-backgrounds.css
 ; stylesheets[all][] = css/forms.css
 ; stylesheets[all][] = css/fields.css
 ; stylesheets[all][] = css/print.css
-
-stylesheets[all][] = jquery.ui.core.min.css
 
 stylesheets[all][] = css/main.css
 
@@ -140,7 +138,7 @@ features[] = secondary_menu
 ; Set the default values of settings on the theme-settings.php form.
 
 settings[zen_breadcrumb]           = yes
-settings[zen_breadcrumb_separator] = ' › '
+settings[zen_breadcrumb_separator] = ' : '
 settings[zen_breadcrumb_home]      = 1
 settings[zen_breadcrumb_trailing]  = 1
 settings[zen_breadcrumb_title]     = 1
