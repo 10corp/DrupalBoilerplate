@@ -6,7 +6,7 @@
   "onevar"    : true,
   "latedef"   : true,
   "immed"     : true,
-  "strict"    : true,
+  "strict"    : false,
   "eqeqeq"    : true,
   "nonew"     : true,
   "curly"     : true,
