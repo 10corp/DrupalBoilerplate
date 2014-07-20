@@ -119,26 +119,6 @@ module.exports = function (grunt) {
     },
 
 
-    cssmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= info.buildDir %>/css/',
-          src: ['**/*.css'],
-          dest: '<%= info.buildDir %>/css/'
-        }]
-      }
-    },
-
-    filerev: {
-      files: {
-        src: [
-          '<%= info.buildScripts %>/vendor/require.modernizr-custom.js',
-          '<%= info.buildScripts %>/common.js'
-        ]
-      }
-    },
-
     jsduck: {
       main: {
         src: [
@@ -227,17 +207,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'css',
-    'js',
-    'clean:dist',
-    'useminPrepare',
-    'requirejs',
-    'cssmin',
-    'uglify',
-    'filerev',
-    'writeRev',
-    'usemin'
-    // 'clean:requirejs',
-    // 'clean:distbower'
+    'js'
   ]);
 
 

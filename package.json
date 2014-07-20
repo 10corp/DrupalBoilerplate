@@ -6,11 +6,6 @@
   "author": {
     "name": "Mark J. Handy"
   },
-  "homepage": "https://github.com/mjhandy/fls-boilerplate",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mjhandy/fls-boilerplate"
-  },
   "devDependencies": {
     "load-grunt-tasks": "~0.3.0",
     "grunt": "~0.4.2",
@@ -25,7 +20,6 @@
     "grunt-usemin": "~2.0.2",
     "grunt-jsduck": "~1.0.1",
     "grunt-grunticon": "~1.0.0",
-    "grunt-legacssy": "~0.3.1",
     "prompt": "~0.2.12",
     "jsonfile": "~1.1.1",
     "extend": "~1.2.1",
