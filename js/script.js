@@ -114,7 +114,7 @@ var Drupal;
 
             // Insert the #nav-togg HTML.
             //$('#navigation').before('<a href="#" id="nav-togg"><span>'+showText+'</span></a>');
-            $('#navigation').before('<a href="#" id="nav-togg"></a>');
+            $('#navigation').before('<a href="#" id="nav-togg"><i class="fa fa-bars"></i></a>');
 
             // Handle #nav-togg clicks.
             $('#nav-togg').click(function () {

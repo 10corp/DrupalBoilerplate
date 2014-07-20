@@ -163,6 +163,10 @@ module.exports = function (grunt) {
           {expand: true,
           src: ['<%= info.sourceDir %>/*.info'],
           dest: '<%= info.devDir %>'},
+          // fonts
+          {expand: true,
+          src: ['fonts/**'],
+          dest: '<%= info.devDir %>'},
         ]
       },
       build:{
