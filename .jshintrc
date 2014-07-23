@@ -12,12 +12,8 @@
   "curly"     : true,
   "forin"     : true,
   "trailing"  : true,
-
   "undef"     : true,
-
   "browser"   : true,
   "devel"     : true,
   "jquery"    : true
-
-
 }

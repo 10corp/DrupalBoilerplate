@@ -22,20 +22,21 @@ module.exports = function (grunt) {
       sourceImages: '<%= info.sourceDir %>/<%= info.imageDir %>',
       sourceStyles: '<%= info.sourceDir %>/<%= info.stylesDir %>',
       sourceSVG: '<%= info.sourceDir %>/<%= info.svgDir %>',
-      docsDir: 'docs'
+      docsDir: 'docs',
+      config : 'configFiles'
     },
 
 
     compass: {
       dev: {
         options: {
-          config: 'configFiles/configDev.rb',
+          config: '<%= info.configFiles %>/configDev.rb',
           cssDir: '<%= info.devDir %>/css'
         }
       },
       build: {
         options: {
-          config: 'configFiles/configBuild.rb',
+          config: '<%= info.configFiles %>/configBuild.rb',
           cssDir: '<%= info.buildDir %>/css'
         }
       }
@@ -264,13 +265,6 @@ module.exports = function (grunt) {
     'css',
     'js'
   ]);
-
-
-  grunt.registerTask('docs', [
-    'clean:docs',
-    'jsduck'
-  ]);
-
 
   grunt.registerTask('writeRev', '', function () {
     var options = this.options({
